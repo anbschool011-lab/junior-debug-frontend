@@ -21,8 +21,13 @@ export interface AnalyzeResponse {
   explanations: Explanation[];
 }
 
-const BACKEND_URL =
-  (import.meta.env.VITE_BACKEND_URL as string) || "http://localhost:8000";
+const _rawBackend =
+  (import.meta.env.VITE_BACKEND_URL as string) ||
+  "https://junior-debug-backend.onrender.com";
+// strip trailing slashes to avoid accidental double-slashes when joining paths
+const BACKEND_URL = _rawBackend
+  .replace(/\/+$|^\s+|\s+$/g, "")
+  .replace(/\/$/, "");
 
 export const analyzeCode = async (
   request: AnalyzeRequest,

@@ -17,9 +17,21 @@ export function useAuth() {
     load();
 
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, currentSession) => {
+      (event, currentSession) => {
+        // Keep local session/user state in sync
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
+
+        // If the user signed out, navigate to home to clear any protected UI
+        if (event === "SIGNED_OUT") {
+          try {
+            // Use replace to avoid keeping previous (protected) pages in history
+            window.location.replace("/");
+          } catch (_) {
+            // fallback
+            window.location.href = "/";
+          }
+        }
       }
     );
 
@@ -36,6 +48,14 @@ export function useAuth() {
 
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
+    // Ensure the client navigates to the home page after sign-out.
+    // The auth listener above will also handle this, but performing the
+    // redirect here ensures immediate navigation for callers.
+    try {
+      window.location.replace("/");
+    } catch (_) {
+      window.location.href = "/";
+    }
   }, []);
 
   return {

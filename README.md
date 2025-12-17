@@ -81,6 +81,25 @@ Notes:
 - This project was scaffolded with Bun in mind, but Vercel commonly installs with `npm` or `pnpm`. The `vercel.json` uses `@vercel/static-build` so `npm run build` will be executed — ensure `node` and `npm` are selected in the Vercel project settings if prompts appear.
 - You can still develop locally with Bun: `bun install` and `bun run dev`.
 
+## Environment variables
+
+This project expects the following Vite environment variables to be set for both local development and when deploying on Vercel:
+
+- `VITE_BACKEND_URL` — URL of your backend service (Render). Do not include a trailing slash.
+- `VITE_SUPABASE_URL` — (optional) your Supabase project URL.
+- `VITE_SUPABASE_ANON_KEY` — (optional) your Supabase anon key.
+
+Local development:
+
+1. Copy `frontend/.env.example` to `frontend/.env` and replace the placeholder values.
+2. Run `bun install` (or `npm ci`) and `bun run dev` (or `npm run dev`).
+
+Vercel:
+
+1. In Vercel, open the Project → Settings → Environment Variables.
+2. Add `VITE_BACKEND_URL` (and any `VITE_...` vars) for the appropriate Environment (Preview/Production).
+3. Redeploy the project.
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!
