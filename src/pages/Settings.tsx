@@ -25,7 +25,8 @@ import LoadingScreen from "@/components/ui/loading-screen";
 import { useNavigate } from "react-router-dom";
 
 const BACKEND_URL =
-  (import.meta.env.VITE_BACKEND_URL as string) || "http://localhost:8000";
+  (import.meta.env.VITE_BACKEND_URL as string) ||
+  "https://junior-debug-backend.onrender.com";
 
 const detectProvider = (key: string) => {
   if (!key) return null;
