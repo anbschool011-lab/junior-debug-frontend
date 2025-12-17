@@ -172,7 +172,19 @@ const AuthControls = () => {
         setAuthLoading(false);
         return;
       }
-      const res = await supabase.auth.signUp({ email, password });
+      // Prefer explicit redirect to the deployed frontend so the confirmation
+      // link returns the user to the correct Vercel domain. Falls back to
+      // window.location.origin when `VITE_FRONTEND_URL` is not set.
+      const redirectTo =
+        (import.meta.env.VITE_FRONTEND_URL as string) || window.location.origin;
+
+      const res = await supabase.auth.signUp(
+        { email, password },
+        // supabase-js (v2) accepts a redirect option; Dashboard settings
+        // also control redirects. Providing this helps ensure the link
+        // targets the correct frontend host.
+        { redirectTo }
+      );
       if (res.error) {
         setMessage(res.error.message);
         setMessageType("error");

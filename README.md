@@ -89,6 +89,9 @@ This project expects the following Vite environment variables to be set for both
 - `VITE_SUPABASE_URL` — (optional) your Supabase project URL.
 - `VITE_SUPABASE_ANON_KEY` — (optional) your Supabase anon key.
 
+- `VITE_FRONTEND_URL` — the public URL of your deployed frontend (used as the
+  redirect target for email confirmation links). Example: `https://your-site.vercel.app`.
+
 Local development:
 
 1. Copy `frontend/.env.example` to `frontend/.env` and replace the placeholder values.
